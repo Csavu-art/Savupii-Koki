@@ -1,8 +1,10 @@
 #tehtävä 3, kanta kertaa korkeus
-kanta = float(input("Anna suorakulmaisen kolmion kanta:"))
-korkeus = float(input("Anna suorakulmaisen kolmion korkeus:"))
+kanta = float(input("Anna suorakulmion kolmion kanta:"))
+korkeus = float(input("Anna suorakulmion korkeus:"))
 
 #lasketaan pinta.ala
-ala = (kanta * korkeus) / 2
+ala = (kanta * korkeus)
 
-print(f"kolmion ala on {ala}")
+print(f"suorakulmion ala on {ala}")
+piiri = (2 * kanta + 2* korkeus)
+print(f"suorakulmion piiri on {piiri}")
