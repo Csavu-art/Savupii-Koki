@@ -20,6 +20,12 @@ ala = (kanta * korkeus) / 2
 
 print(f"kolmion ala on {ala}")
 
+ikä =int(input("Anna ikä:"))
+if ikä 15<=<18:
+    paino = float(input("Anna paino:"))
+if (ikä<=18 or ikä>=15 and paino =55):
+    print("saa käyttää")
+
 print("Loppuu")
 
 #loppu
