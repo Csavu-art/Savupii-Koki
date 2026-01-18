@@ -1,11 +1,8 @@
 import random
+import random
 
-# Kolmenumeroinen koodi (0..9)
-kolmenumeroinen = "".join(str(random.randint(0, 9)) for _ in range(3))
+print("Kolmenumeroinen koodi (0..9):")
+print(random.randint(0, 9), random.randint(0, 9), random.randint(0, 9))
 
-# Nelinumeroinen koodi (1..6)
-nelinumeroinen = "".join(str(random.randint(1, 6)) for _ in range(4))
-
-# Tulostus
-print("Kolmenumeroinen koodi (0..9):", kolmenumeroinen)
-print("Nelinumeroinen koodi (1..6):", nelinumeroinen)
+print("Nelinumeroinen koodi (1..6):")
+print(random.randint(1, 6), random.randint(1, 6), random.randint(1, 6), random.randint(1, 6))
