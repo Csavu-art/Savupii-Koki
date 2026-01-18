@@ -1,5 +1,4 @@
 import random
-import random
 
 print("Kolmenumeroinen koodi (0..9):")
 print(random.randint(0, 9), random.randint(0, 9), random.randint(0, 9))
