@@ -6,5 +6,5 @@ korkeus = float(input("Anna suorakulmion korkeus:"))
 ala = (kanta * korkeus)
 
 print(f"suorakulmion ala on {ala}")
-piiri = (2 * kanta + 2* korkeus)
+piiri = (2 * kanta + 2 * korkeus)
 print(f"suorakulmion piiri on {piiri}")
