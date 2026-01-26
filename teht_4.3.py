@@ -4,7 +4,7 @@ suurin = None
 syote = input("Anna luku (Enter lopettaa): ")
 
 while syote != "":
-    luku = float(syote)  # voi olla myös int(syote) jos haluat vain kokonaisluvut
+    luku = float(syote)  # voi käyttää myös int(syöte)
 
     if pienin is None or luku < pienin:
         pienin = luku
