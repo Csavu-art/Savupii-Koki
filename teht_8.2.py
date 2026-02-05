@@ -1,32 +1,41 @@
 import mysql.connector
 
-yhteys = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="salasana",
-    database="lentokentat",
-)
+DB_CONFIG = {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "admin",
+    "password": "KiraTina9_DB",
+    "database": "flight_game"
+}
 
-maakoodi = input("Anna maakoodi (esim. FI): ").strip().upper()
+def get_airport_counts(connection, country_code):
+    query = f"""
+        SELECT type, COUNT(*) 
+        FROM flight_game.airport
+        WHERE iso_country = "{country_code}"
+        GROUP BY type
+    """
+    cursor = connection.cursor()
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    cursor.close()
+    return rows
 
-kursori = yhteys.cursor()
+def print_rows(rows):
+    if rows == None or len(rows) == 0:
+        print("Not found")
+        return
 
-sql = """
-SELECT type, COUNT(*) AS lkm
-FROM airport
-WHERE iso_country = %s
-GROUP BY type
-ORDER BY lkm DESC
-"""
-kursori.execute(sql, (maakoodi,))
-tulokset = kursori.fetchall()
+    for row in rows:
+        print(row[0], row[1])
 
-if tulokset:
-    print(f"\nLentokenttien lukumäärät maassa {maakoodi}:")
-    for tyyppi, lkm in tulokset:
-        print(f"{tyyppi}: {lkm}")
-else:
-    print("Ei löytynyt lentokenttiä tai maakoodi on väärä.")
+def main():
+    connection = mysql.connector.connect(**DB_CONFIG)
 
-kursori.close()
-yhteys.close()
+    country_code = input("Enter country code (e.g. FI): ")
+    rows = get_airport_counts(connection, country_code)
+    print_rows(rows)
+
+    connection.close()
+
+main()

@@ -1,34 +1,41 @@
 import mysql.connector
 from geopy.distance import geodesic
 
-yhteys = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="salasana",
-    database="lentokentat",
-)
+DB_CONFIG = {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "admin",
+    "password": "KiraTina9_DB",
+    "database": "flight_game"
+}
 
-def hae_koordinaatit(icao: str):
-    kursori = yhteys.cursor()
-    sql = "SELECT latitude_deg, longitude_deg FROM airport WHERE ident = %s"
-    kursori.execute(sql, (icao,))
-    rivi = kursori.fetchone()
-    kursori.close()
-    return rivi  # None jos ei löydy
+def get_coordinates(connection, icao):
+    query = f"""
+        SELECT latitude_deg, longitude_deg
+        FROM flight_game.airport
+        WHERE ident = "{icao}"
+    """
+    cursor = connection.cursor()
+    cursor.execute(query)
+    row = cursor.fetchone()
+    cursor.close()
+    return row
 
-icao1 = input("Anna 1. ICAO-koodi: ").strip().upper()
-icao2 = input("Anna 2. ICAO-koodi: ").strip().upper()
+def main():
+    connection = mysql.connector.connect(**DB_CONFIG)
 
-p1 = hae_koordinaatit(icao1)
-p2 = hae_koordinaatit(icao2)
+    icao1 = input("Enter first ICAO-code: ")
+    icao2 = input("Enter second ICAO-code: ")
 
-if not p1:
-    print(f"ICAO-koodia ei löytynyt: {icao1}")
-elif not p2:
-    print(f"ICAO-koodia ei löytynyt: {icao2}")
-else:
-    # p1 ja p2 ovat (lat, lon)
-    etaisyys_km = geodesic(p1, p2).kilometers
-    print(f"Lentokenttien {icao1} ja {icao2} välinen etäisyys on {etaisyys_km:.2f} km.")
+    coord1 = get_coordinates(connection, icao1)
+    coord2 = get_coordinates(connection, icao2)
 
-yhteys.close()
+    if coord1 == None or coord2 == None:
+        print("Airport not found")
+    else:
+        distance_km = geodesic(coord1, coord2).kilometers
+        print(f"Distance: {distance_km:.2f} km")
+
+    connection.close()
+
+main()
