@@ -1,27 +1,37 @@
 import mysql.connector
 
+DB_CONFIG = {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "admin",
+    "password": "KiraTina9_DB",
+    "database": "flight_game"
+}
 
-yhteys = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="salasana",
-    database="lentokentat"
-)
+def get_airport(connection, icao):
+    query = f"SELECT name, iso_country FROM flight_game.airport WHERE ident=\"{icao}\""
+    cursor = connection.cursor()
 
-icao = input("Anna ICAO-koodi: ").strip().upper()
+    cursor.execute(query)
 
-kursori = yhteys.cursor()
+    row = cursor.fetchone()
+    cursor.close()
 
-sql = "SELECT name, municipality FROM airport WHERE ident = %s"
-kursori.execute(sql, (icao,))
+    return row
 
-tulos = kursori.fetchone()
+def print_row(row):
+    if row == None:
+        print("Not found")
+        return
 
-if tulos:
-    print(f"Lentokentän nimi: {tulos[0]}")
-    print(f"Sijaintikunta: {tulos[1]}")
-else:
-    print("Lentoasemaa ei löytynyt.")
+    for i in row:
+        print(i)
 
-kursori.close()
-yhteys.close()
+def main():
+    connection = mysql.connector.connect(**DB_CONFIG)
+
+    icao = input("Enter ICAO-code: ")
+    row = get_airport(connection, icao)
+    print_row(row)
+
+main()
