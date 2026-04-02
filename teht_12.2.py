@@ -1,6 +1,6 @@
 import requests
 
-api_avain = "OMA_API_AVAIN"
+api_avain = "8f59569ce6c875030acbb0cf9949bb6b"
 paikkakunta = input("Anna paikkakunta: ")
 
 url = "https://api.openweathermap.org/data/2.5/weather"
