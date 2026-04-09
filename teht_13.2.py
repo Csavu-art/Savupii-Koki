@@ -55,7 +55,7 @@ def alkuluku(luku):
 @app.route('/kentta/<icao>')
 def kentta(icao):
     try:
-        sql = "SELECT ident, name, municipality FROM airport WHERE ident = %s"
+        sql = f"SELECT ident, name, municipality FROM airport WHERE ident = '{kentta}' limit 5"
         kursori = yhteys.cursor()
         kursori.execute(sql, (icao,))
         tulos = kursori.fetchone()
